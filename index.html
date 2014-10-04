@@ -185,6 +185,10 @@
 
 	</script>
     <script type="text/javascript">
+	    function validateEmail(email) { 
+		    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		    return re.test(email);
+		} 
     	$(document).ready(function(){
 		   $("#pointer").click(function (){
 		   		ga('send', 'click', 'button', 'pointer');
@@ -195,7 +199,13 @@
             
             $("#btn_send").click(function(){
             	var email = $("#email").val();
-            	ga('send', 'click', 'button', 'send');
+            	if (!validateEmail(email)) {
+            		alert("E-mail введен неправильно");
+            		ga('send', 'error', 'email', email);
+            	} else {
+            		ga('send', 'ok', 'emai', email);
+            		alert("Ваш e-mail учтен.");
+            	}
             });
             
             $( "#email" ).focus(function() {
